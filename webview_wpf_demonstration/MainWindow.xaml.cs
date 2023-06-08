@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+
+using Path = System.IO.Path;
 
 namespace webview_wpf_demonstration
 {
@@ -23,6 +26,15 @@ namespace webview_wpf_demonstration
         public MainWindow()
         {
             InitializeComponent();
+            GoogleHomepage.Source = new Uri("https://google.com");
+            string filename = "index.html";
+            if (File.Exists(filename)){
+                filename = Path.GetFullPath(filename);
+                LocalFiles.Source = new Uri($"file://{filename}");
+            } else
+            {
+                throw new FileNotFoundException("Unable to locate index.html.");
+            }
         }
     }
 }
